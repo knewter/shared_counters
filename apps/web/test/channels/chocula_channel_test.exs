@@ -19,6 +19,7 @@ defmodule Web.CounterChannelTest do
       ref = push socket, "counter:increment", %{}
       assert_reply ref, :ok
       assert 1 = get_count(id)
+      assert_broadcast "counter:state", %{count: 1}
     end
   end
 

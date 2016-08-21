@@ -14,6 +14,7 @@ defmodule Web.CounterChannel do
 
   def handle_in("counter:increment", _, socket) do
     :ok = counter_id(socket.topic) |> CountChocula.increment()
+    broadcast! socket, "counter:state", %{ count: CountChocula.get_count(counter_id(socket.topic)) }
     {:reply, :ok, socket}
   end
 
