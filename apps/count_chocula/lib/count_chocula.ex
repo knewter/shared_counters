@@ -12,5 +12,22 @@ defmodule CountChocula do
     Supervisor.start_link(children, opts)
   end
 
-  defdelegate start_counter(id), to: CountChocula.Supervisor
+  def start_counter(id) do
+    case :global.whereis_name(id) do
+      :undefined ->
+        {:ok, pid} = CountChocula.Supervisor.start_counter
+        :yes = :global.register_name(id, pid)
+        {:ok, pid}
+      pid ->
+        {:ok, pid}
+    end
+  end
+
+  def increment(id) do
+    CountChocula.Server.increment({:global, id})
+  end
+
+  def get_count(id) do
+    CountChocula.Server.get_count({:global, id})
+  end
 end

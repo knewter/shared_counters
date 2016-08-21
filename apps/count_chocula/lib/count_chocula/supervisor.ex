@@ -6,8 +6,8 @@ defmodule CountChocula.Supervisor do
     Supervisor.start_link(__MODULE__, [], name: @name)
   end
 
-  def start_counter(id) do
-    Supervisor.start_child(@name, [id])
+  def start_counter do
+    Supervisor.start_child(@name, [])
   end
 
   def init(_) do

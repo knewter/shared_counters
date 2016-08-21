@@ -2,11 +2,8 @@ defmodule CountChocula.Server do
   use GenServer
 
   ### Public API
-  def start_link(id) do
-    case GenServer.start_link(__MODULE__, [], name: {:global, id}) do
-      {:ok, pid} -> {:ok, pid}
-      {:error, {:already_started, pid}} -> {:ok, pid}
-    end
+  def start_link do
+    GenServer.start_link(__MODULE__, [])
   end
 
   def get_count(pid) do
